@@ -1,6 +1,7 @@
 # SimpleCluster
 
-**TODO: Add description**
+To Run:
+iex --name n@192.168.1.x -S mix
 
 ## Installation
 
