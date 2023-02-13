@@ -1,6 +1,6 @@
-sudo apt-get update -y
-sudo apt update -y
-sudo apt install curl git
+sudo apt-get update
+sudo apt update
+sudo apt -y install curl git
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.1
 bash . "$HOME/.asdf/asdf.sh"
 bash . "$HOME/.asdf/completions/asdf.bash"
