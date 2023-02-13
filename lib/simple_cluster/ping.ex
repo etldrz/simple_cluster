@@ -19,6 +19,11 @@ defmodule SimpleCluster.Ping do
     |> Logger.info()
   end
 
+  def send_name(serverName) do
+    name = :inet.gethostname()
+    GenServer.call(serverName, name) |> Logger.info()
+  end
+
   @impl GenServer
   def init(state), do: {:ok, state}
 
