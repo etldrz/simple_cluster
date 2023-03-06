@@ -20,12 +20,13 @@ defmodule SimpleCluster.Ping do
   end
 
   def send_name(nodeNum) do
+    nodeNum = Integer.parse(nodeNum)
     name = :inet.gethostname()
     list_of_nodes = Node.list()
     IO.puts(list_of_nodes[nodeNum])
-    # if nodeNum < length(list_of_nodes) && nodeNum >= 0 do
-    #   GenServer.call(list_of_nodes[nodeNum], name) |> Logger.info()
-    # end
+    if nodeNum < length(list_of_nodes) && nodeNum >= 0 do
+      GenServer.call(list_of_nodes[nodeNum], name) |> Logger.info()
+    end
   end
 
   @impl GenServer
