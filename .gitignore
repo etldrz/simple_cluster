@@ -24,3 +24,6 @@ simple_cluster-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+.DS_Store
+.vscode/launch.json
+.gitignore
