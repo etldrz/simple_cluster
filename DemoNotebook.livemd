@@ -1,0 +1,34 @@
+# SimpleCluster + Livebook Demo
+
+```elixir
+Mix.install([
+  {:simple_cluster, path: "/Users/atang/Documents/simple_cluster"},
+  {:cluster_connect_smartcell, "~> 0.0.1"}
+])
+```
+
+## You add a ClusterConnectSmartCell
+
+<!-- livebook:{"attrs":{},"chunks":null,"kind":"Elixir.ClusterConnectSmartcell","livebook_object":"smart_cell"} -->
+
+```elixir
+rpc_result =
+  with {:cookie, true} <- {:cookie, :erlang.set_cookie(:"")},
+       {:connect, true} <- {:connect, :"" |> :net_kernel.connect_node()},
+       {:monitor, :ok} <- {:monitor, :net_kernel.monitor_nodes(true)},
+       nodes <- Node.list(:connected),
+       {:command, {:ok, result}} <-
+         {:command, ClusterConnectSmartcell.do_execute_remote_command(:"", "", "", "")} do
+    %{"result" => result, "nodes" => nodes}
+  else
+    {step, res} when step in [:cookie, :connect, :command, :monitor] ->
+      %{"outcome" => false} |> Map.put(Atom.to_string(step), res)
+
+    error ->
+      %{"outcome" => false, "error" => error}
+  end
+```
+
+```elixir
+
+```
