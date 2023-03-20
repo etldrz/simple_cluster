@@ -23,7 +23,7 @@ defmodule SimpleCluster.Application do
     topologies = [
       example: [
         strategy: Cluster.Strategy.Epmd,
-        config: [hosts: [:"n1@155.98.38.138", :"n2@155.98.38.152", :"n3@155.98.38.159", :"n4@155.98.131.2"]]
+        config: [hosts: [:"n1@155.98.38.97", :"n2@155.98.38.91", :"n3@155.98.38.92"]]
         #config: [hosts: [:"n1@192.168.1.1", :"n2@192.168.1.2", :"n3@192.168.1.3"]]
         #config: [hosts: [:"n1@127.0.0.1", :"n2@127.0.0.1"]]
       ]
