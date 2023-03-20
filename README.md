@@ -38,3 +38,11 @@ Need to lunch livebook like so that it can use fully qualified names.
 ```shell
 livebook server --name
 ```
+
+## Note
+
+In order to use Rambo, you will need to cd to 
+```shell
+/Users/atang/Documents/notebook-with-powder/simplecluster/_build/dev/lib/rambo/priv
+```
+change one of the three Rambo executable files to "rambo"

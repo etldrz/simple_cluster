@@ -7,7 +7,7 @@ defmodule SimpleCluster.Application do
 
   @impl true
   def start(_type, _args) do
-    Node.start(:"n4@155.98.131.2")
+    # Node.start(:"n4@155.98.131.2")
     Node.set_cookie(:cluster1)
     # topologies = [
     #   gossip_example: [
