@@ -31,7 +31,8 @@ defmodule SimpleCluster.Application do
     children = [
       {Cluster.Supervisor, [topologies, [name: MyApp.ClusterSupervisor]]},
       SimpleCluster.Observer,
-      SimpleCluster.Ping
+      SimpleCluster.Ping,
+      SimpleCluster.Executer
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
