@@ -28,4 +28,9 @@ defmodule SimpleCluster.Executer do
     Enum.each(output, fn x -> IO.puts x end)
   end
 
+  @impl GenServer
+  def handle_info(term, state) do
+    {:noreply, state}
+  end
+
 end
