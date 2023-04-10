@@ -10,11 +10,17 @@ defmodule SimpleCluster.Executer do
     {:ok, state}
   end
 
+  @impl GenServer
+  def handle_info(term, state) do
+    {:noreply, state}
+  end
+
   def send_command(function_name) do
     # Run async and give a timeout
     task = Task.async(fn ->
       Rambo.run(function_name)
     end)
+    IO.puts("Job ID: " <> task.pid)
     {:ok, result} = Task.await(task)
     output = String.split(result.out, "\n")
     Enum.each(output, fn x -> IO.puts x end)
@@ -30,11 +36,6 @@ defmodule SimpleCluster.Executer do
     {:ok, result} = Rambo.run(function_name, args, opts)
     output = String.split(result.out, "\n")
     Enum.each(output, fn x -> IO.puts x end)
-  end
-
-  @impl GenServer
-  def handle_info(term, state) do
-    {:noreply, state}
   end
 
 end
