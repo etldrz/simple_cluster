@@ -20,7 +20,7 @@ defmodule SimpleCluster.Executer do
     task = Task.async(fn ->
       Rambo.run(function_name)
     end)
-    IO.puts("Job ID: " <> task.pid)
+    IO.inspect(task.pid)
     {:ok, result} = Task.await(task)
     output = String.split(result.out, "\n")
     Enum.each(output, fn x -> IO.puts x end)
