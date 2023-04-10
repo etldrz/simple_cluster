@@ -20,20 +20,25 @@ defmodule SimpleCluster.Executer do
     task = Task.async(fn ->
       Rambo.run(function_name)
     end)
-    IO.inspect(task.pid)
     {:ok, result} = Task.await(task)
     output = String.split(result.out, "\n")
     Enum.each(output, fn x -> IO.puts x end)
   end
 
   def send_command(function_name, args_or_options) do
-    {:ok, result} = Rambo.run(function_name, args_or_options)
+    task = Task.async(fn ->
+      Rambo.run(function_name, args_or_options)
+    end)
+    {:ok, result} = Task.await(task)
     output = String.split(result.out, "\n")
     Enum.each(output, fn x -> IO.puts x end)
   end
 
   def send_command(function_name, args, opts) do
-    {:ok, result} = Rambo.run(function_name, args, opts)
+    task = Task.async(fn ->
+      Rambo.run(function_name, args, opts)
+    end)
+    {:ok, result} = Task.await(task)
     output = String.split(result.out, "\n")
     Enum.each(output, fn x -> IO.puts x end)
   end
