@@ -13,7 +13,7 @@ defmodule SimpleCluster.Executer do
   def send_command(function_name) do
     # Run async and give a timeout
     task = Task.async(fn ->
-      Rambo.run()
+      Rambo.run(function_name)
     end)
     {:ok, result} = Task.await(task)
     output = String.split(result.out, "\n")
