@@ -6,7 +6,7 @@ defmodule SimpleCluster.Executer do
 
   @impl GenServer
   def init(state) do
-    :net_kernel.monitor_nodes(true)
+    Supervisor.start_link([Task.Supervisor, name: Executer.TaskSupervisor], strategy: :one_for_one)
     {:ok, state}
   end
 
@@ -17,12 +17,13 @@ defmodule SimpleCluster.Executer do
 
   def send_command(function_name) do
     # Run async and give a timeout
-    task = Task.async(fn ->
+    task = Task.Supervisor.async_nolink(Executer.TaskSupervisor, fn ->
       Rambo.run(function_name)
     end)
-    {:ok, result} = Task.await(task)
-    output = String.split(result.out, "\n")
-    Enum.each(output, fn x -> IO.puts x end)
+    {:reply, :ok}
+    # {:ok, result} = Task.await(task)
+    # output = String.split(result.out, "\n")
+    # Enum.each(output, fn x -> IO.puts x end)
   end
 
   def send_command(function_name, args_or_options) do
