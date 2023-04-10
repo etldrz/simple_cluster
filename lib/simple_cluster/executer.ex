@@ -11,7 +11,11 @@ defmodule SimpleCluster.Executer do
   end
 
   def send_command(function_name) do
-    {:ok, result} = Rambo.run(function_name)
+    # Run async and give a timeout
+    task = Task.async(fn ->
+      Rambo.run()
+    end)
+    {:ok, result} = Task.await(task)
     output = String.split(result.out, "\n")
     Enum.each(output, fn x -> IO.puts x end)
   end
