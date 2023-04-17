@@ -17,7 +17,7 @@ defmodule SimpleCluster.Executer do
 
   def send_command(function_name, async) do
     # The background process will be killed after 10 minutes no matter what
-    default_timeout = 60000
+    default_timeout = 600_000
     # Run async and give a timeout
     {:ok, pid} = Task.Supervisor.start_link()
     if async == true do
