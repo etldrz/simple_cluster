@@ -37,7 +37,8 @@ defmodule SimpleCluster.Executer do
       Rambo.run(function_name)
     end)
       {:ok, result} = Task.await(task)
-      output = String.split(result.out, "\n")
+      result.out
+      #output = String.split(result.out, "\n")
       #Enum.each(output, fn x -> IO.puts x end)
     end
   end
@@ -56,7 +57,7 @@ defmodule SimpleCluster.Executer do
         Rambo.run(function_name, args_or_options)
     end)
       {:ok, result} = Task.await(task)
-      output = String.split(result.out, "\n")
+      #output = String.split(result.out, "\n")
       #Enum.each(output, fn x -> IO.puts x end)
     end
   end
@@ -75,7 +76,7 @@ defmodule SimpleCluster.Executer do
         Rambo.run(function_name, args, opts)
     end)
       {:ok, result} = Task.await(task)
-      output = String.split(result.out, "\n")
+      #output = String.split(result.out, "\n")
       #Enum.each(output, fn x -> IO.puts x end)
     end
   end
