@@ -2,7 +2,7 @@ defmodule SimpleCluster.Executer do
   # use GenServer
   # require Logger
 
-  # def start_link(_), do: GenServer.start_link(__MODULE__, %{})
+  def start_link(_), do: GenServer.start_link(__MODULE__, %{})
 
   # @impl GenServer
   # def init(state) do
