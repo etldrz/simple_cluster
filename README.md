@@ -38,7 +38,7 @@ Need to lunch livebook like so that it can use fully qualified names.
 ```shell
 livebook server --name
 ```
-
+  
 ## Note
 
 In order to use Rambo, you will need to cd to 
