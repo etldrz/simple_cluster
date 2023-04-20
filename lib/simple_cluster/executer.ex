@@ -1,17 +1,21 @@
 defmodule SimpleCluster.Executer do
-  # use GenServer
-  # require Logger
+  use GenServer
+  require Logger
 
   def start_link(_), do: GenServer.start_link(__MODULE__, %{})
 
-  # @impl GenServer
+  @impl GenServer
   def init(state) do
     # Supervisor.start_link([Task.Supervisor, name: SimpleCluster.TaskSupervisor], strategy: :one_for_one)
     {:ok, state}
   end
 
-  # @impl GenServer
+  @impl GenServer
   def handle_info(term, state) do
+    {:noreply, state}
+  end
+
+  def terminate(reason, state) do
     {:noreply, state}
   end
 
