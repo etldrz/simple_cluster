@@ -10,14 +10,15 @@ defmodule SimpleCluster.Executer do
     {:ok, state}
   end
 
-  @impl GenServer
-  def handle_info(term, state) do
-    {:noreply, state}
-  end
 
   @impl GenServer
   def handle_info({:EXIT, pid, reason}, state) do
     Logger.info("A child process died: #{reason}")
+    {:noreply, state}
+  end
+
+  @impl GenServer
+  def handle_info(term, state) do
     {:noreply, state}
   end
 
