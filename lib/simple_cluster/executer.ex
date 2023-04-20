@@ -16,19 +16,11 @@ defmodule SimpleCluster.Executer do
   end
 
   @impl GenServer
-  def terminate(reason, state) do
+  def handle_info({:EXIT, pid, reason}, state) do
+    Logger.info("A child process died: #{reason}")
     {:noreply, state}
   end
 
-  def child_spec(opts) do
-    %{
-      id: __MODULE__,
-      start: {__MODULE__, :start_link, [opts]},
-      type: :worker,
-      restart: :permanent,
-      shutdown: 500
-    }
-  end
 
   def send_command(function_name, async) do
     # The background process will be killed after 10 minutes no matter what
