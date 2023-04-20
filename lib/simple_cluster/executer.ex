@@ -38,7 +38,7 @@ defmodule SimpleCluster.Executer do
     end)
       {:ok, result} = Task.await(task)
       output = String.split(result.out, "\n")
-      Enum.each(output, fn x -> IO.puts x end)
+      #Enum.each(output, fn x -> IO.puts x end)
     end
   end
 
@@ -57,7 +57,7 @@ defmodule SimpleCluster.Executer do
     end)
       {:ok, result} = Task.await(task)
       output = String.split(result.out, "\n")
-      Enum.each(output, fn x -> IO.puts x end)
+      #Enum.each(output, fn x -> IO.puts x end)
     end
   end
 
@@ -76,7 +76,7 @@ defmodule SimpleCluster.Executer do
     end)
       {:ok, result} = Task.await(task)
       output = String.split(result.out, "\n")
-      Enum.each(output, fn x -> IO.puts x end)
+      #Enum.each(output, fn x -> IO.puts x end)
     end
   end
 
