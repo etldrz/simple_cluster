@@ -5,15 +5,15 @@ defmodule SimpleCluster.Executer do
   def start_link(_), do: GenServer.start_link(__MODULE__, %{})
 
   # @impl GenServer
-  # def init(state) do
-  #   # Supervisor.start_link([Task.Supervisor, name: SimpleCluster.TaskSupervisor], strategy: :one_for_one)
-  #   {:ok, state}
-  # end
+  def init(state) do
+    # Supervisor.start_link([Task.Supervisor, name: SimpleCluster.TaskSupervisor], strategy: :one_for_one)
+    {:ok, state}
+  end
 
   # @impl GenServer
-  # def handle_info(term, state) do
-  #   {:noreply, state}
-  # end
+  def handle_info(term, state) do
+    {:noreply, state}
+  end
 
   def child_spec(opts) do
     %{
