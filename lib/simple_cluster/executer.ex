@@ -35,7 +35,6 @@ defmodule SimpleCluster.Executer do
     default_timeout = 600_000
     # Run async and give a timeout
     {:ok, pid} = Task.Supervisor.start_link()
-    IO.puts(pid);
     if async == true do
       Task.Supervisor.start_child(pid, fn ->
         Rambo.run(function_name)
