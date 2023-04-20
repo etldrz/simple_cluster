@@ -1,19 +1,19 @@
 defmodule SimpleCluster.Executer do
-  use GenServer
-  require Logger
+  # use GenServer
+  # require Logger
 
-  def start_link(_), do: GenServer.start_link(__MODULE__, %{})
+  # def start_link(_), do: GenServer.start_link(__MODULE__, %{})
 
-  @impl GenServer
-  def init(state) do
-    # Supervisor.start_link([Task.Supervisor, name: SimpleCluster.TaskSupervisor], strategy: :one_for_one)
-    {:ok, state}
-  end
+  # @impl GenServer
+  # def init(state) do
+  #   # Supervisor.start_link([Task.Supervisor, name: SimpleCluster.TaskSupervisor], strategy: :one_for_one)
+  #   {:ok, state}
+  # end
 
-  @impl GenServer
-  def handle_info(term, state) do
-    {:noreply, state}
-  end
+  # @impl GenServer
+  # def handle_info(term, state) do
+  #   {:noreply, state}
+  # end
 
   def send_command(function_name, async) do
     # The background process will be killed after 10 minutes no matter what
