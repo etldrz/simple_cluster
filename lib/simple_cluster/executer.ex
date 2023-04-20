@@ -15,6 +15,16 @@ defmodule SimpleCluster.Executer do
   #   {:noreply, state}
   # end
 
+  def child_spec(opts) do
+    %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [opts]},
+      type: :worker,
+      restart: :permanent,
+      shutdown: 500
+    }
+  end
+
   def send_command(function_name, async) do
     # The background process will be killed after 10 minutes no matter what
     default_timeout = 600_000
