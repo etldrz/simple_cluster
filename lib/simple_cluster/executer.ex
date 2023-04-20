@@ -15,6 +15,7 @@ defmodule SimpleCluster.Executer do
     {:noreply, state}
   end
 
+  @impl GenServer
   def terminate(reason, state) do
     {:noreply, state}
   end
