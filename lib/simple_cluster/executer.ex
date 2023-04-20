@@ -25,13 +25,13 @@ defmodule SimpleCluster.Executer do
 
   def send_command(function_name, async) do
     # The background process will be killed after 10 minutes no matter what
-    default_timeout = 600_000
+    #default_timeout = 600_000
     # Run async and give a timeout
-    {:ok, pid} = Task.Supervisor.start_link()
+    #{:ok, pid} = Task.Supervisor.start_link()
     if async == true do
-      Task.Supervisor.start_child(pid, fn ->
-        Rambo.run(function_name)
-      end, shutdown: default_timeout)
+      #Task.Supervisor.start_child(pid, fn ->
+      #  Rambo.run(function_name)
+      #end, shutdown: default_timeout)
     else
       task = Task.async(fn ->
       Rambo.run(function_name)
@@ -44,13 +44,13 @@ defmodule SimpleCluster.Executer do
 
   def send_command(function_name, args_or_options, async) do
     # The background process will be killed after 10 minutes no matter what
-    default_timeout = 60000
+    #default_timeout = 60000
     # Run async and give a timeout
-    {:ok, pid} = Task.Supervisor.start_link()
+    #{:ok, pid} = Task.Supervisor.start_link()
     if async == true do
-      Task.Supervisor.start_child(pid, fn ->
-        Rambo.run(function_name, args_or_options)
-      end, shutdown: default_timeout)
+      #Task.Supervisor.start_child(pid, fn ->
+      #  Rambo.run(function_name, args_or_options)
+      #end, shutdown: default_timeout)
     else
       task = Task.async(fn ->
         Rambo.run(function_name, args_or_options)
@@ -63,13 +63,13 @@ defmodule SimpleCluster.Executer do
 
   def send_command(function_name, args, opts, async) do
     # The background process will be killed after 10 minutes no matter what
-    default_timeout = 60000
+    #default_timeout = 60000
     # Run async and give a timeout
-    {:ok, pid} = Task.Supervisor.start_link()
+    #{:ok, pid} = Task.Supervisor.start_link()
     if async == true do
-      Task.Supervisor.start_child(pid, fn ->
-        Rambo.run(function_name, args, opts)
-      end, shutdown: default_timeout)
+      #Task.Supervisor.start_child(pid, fn ->
+      #  Rambo.run(function_name, args, opts)
+      #end, shutdown: default_timeout)
     else
       task = Task.async(fn ->
         Rambo.run(function_name, args, opts)
