@@ -25,9 +25,7 @@ defmodule SimpleCluster.MixProject do
     [
       {:libcluster, "~> 3.3"},
       {:rambo, "~> 0.3"},
-      {:erlexec, "~> 2.0"},
-      {:vega_lite, "~> 0.1.6"},
-      {:kino_vega_lite, "~> 0.1.8"}
+      {:erlexec, "~> 2.0"}
     ]
   end
 end
