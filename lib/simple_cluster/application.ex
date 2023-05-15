@@ -4,7 +4,7 @@ defmodule SimpleCluster.Application do
   @moduledoc false
 
   use Application
-
+  alias VegaLite, as: Vl
   @impl true
   def start(_type, _args) do
     # Node.start(:"n4@155.98.131.2")
