@@ -13,10 +13,15 @@ defmodule SimpleCluster.Executer do
   def run_command(cmd, async) do
     if async == true do
       # Since it is async, then the caller wouldn't care about the return value
-      {:ok, _ , osPID} = :exec.run_link(cmd, [{:stdout, &handle_async_result/3}, :stdin])
+      #Process.flag(:trap_exit, true)
+      {:ok, _, osPID} = :exec.run_link(cmd, [{:stdout, &handle_async_result/3}, :stdin])
       #{:ok, _ , osPID} = :exec.run_link(cmd, [{:stdout, :print}, :stdin])
       # So return the osPID so that the caller could use it for future use.
       osPID
+      # receive do
+      #   {:EXIT, from, reason} ->
+      #     IO.puts("Got exit signal")
+      # end
     else
       {:ok, [stdout: result]} = :exec.run_link(cmd, [:sync, :stdout])
       # Just return the result
@@ -62,4 +67,5 @@ defmodule SimpleCluster.Executer do
   defp handle_async_result(_, _, data) do
     IO.puts(data)
   end
+
 end
