@@ -1,4 +1,3 @@
-bash
 cd /local
 sudo chown axetang:PowderSandbox .
 sudo apt-get update
