@@ -28,3 +28,5 @@ simple_cluster-*.tar
 .vscode
 .gitignore
 .elixir_ls
+alpha-beta.livemd
+dist-elixir-3.txt

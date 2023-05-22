@@ -4,7 +4,6 @@ defmodule SimpleCluster.Application do
   @moduledoc false
 
   use Application
-  alias VegaLite, as: Vl
   @impl true
   def start(_type, _args) do
     # Node.start(:"n4@155.98.131.2")
@@ -32,13 +31,14 @@ defmodule SimpleCluster.Application do
       # {Cluster.Supervisor, [topologies, [name: MyApp.ClusterSupervisor]]},
       SimpleCluster.Observer,
       SimpleCluster.Ping,
-      SimpleCluster.Executer
+      SimpleCluster.Executer,
+      {Task.Supervisor, name: AsyncTaskSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SimpleCluster.Supervisor]
+    :exec.start()
     Supervisor.start_link(children, opts)
-
   end
 end

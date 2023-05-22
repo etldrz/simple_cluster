@@ -2,7 +2,7 @@ defmodule SimpleCluster.Executer do
   use Agent
 
   def start_link(_arg) do
-    Agent.start_link(fn -> :exec.start() end)
+    Agent.start_link(fn -> %{} end, name: __MODULE__)
   end
 
   # Run the given command either synchronous or asynchronous.
@@ -12,16 +12,14 @@ defmodule SimpleCluster.Executer do
   # DOES NOT GIVE FINE CONTROL OVER THE COMMAND
   def run_command(cmd, async) do
     if async == true do
-      # Since it is async, then the caller wouldn't care about the return value
-      #Process.flag(:trap_exit, true)
-      {:ok, _, osPID} = :exec.run_link(cmd, [{:stdout, &handle_async_result/3}, :stdin])
-      #{:ok, _ , osPID} = :exec.run_link(cmd, [{:stdout, :print}, :stdin])
+      {:ok, pid, osPID} = :exec.run_link(cmd, [{:stdout, &handle_async_result/3}, :stdin])
+      # Put the new task and results in the map as a place holder
+      Agent.update(__MODULE__, fn state ->
+        Map.put_new(state, osPID, %{ready: false, results: []})
+      end)
+      Task.start(SimpleCluster.Executer, :start_monitoring, [pid])
       # So return the osPID so that the caller could use it for future use.
       osPID
-      # receive do
-      #   {:EXIT, from, reason} ->
-      #     IO.puts("Got exit signal")
-      # end
     else
       {:ok, [stdout: result]} = :exec.run_link(cmd, [:sync, :stdout])
       # Just return the result
@@ -59,13 +57,64 @@ defmodule SimpleCluster.Executer do
     :exec.send(osPID, data)
   end
 
+  # This function allows the user to get the the result of the executed async commands.
+  # Will return the whole result.
+  def get_raw_result(osPID) do
+    Agent.get(__MODULE__, fn state ->
+      Map.get(state, osPID)
+    end)
+  end
+
+  # This function returns only the content of the result even if the result is not ready yet.
+  def get_partial_result(osPID) do
+    Agent.get(__MODULE__, fn state ->
+      Map.get(state, osPID) |> Map.get(:results)
+    end)
+  end
+
+  # This function will return
+  def get_full_result(osPID) do
+    Agent.get(__MODULE__, fn state ->
+      if Map.get(state, osPID) |> Map.get(:ready) do
+        Map.get(state, osPID) |> Map.get(:results)
+      else
+        nil
+      end
+    end)
+  end
+
   # This helper function parse the output so that each element is on their own line.
   defp parse_output(output) do
     output |> String.split("\n") |> Enum.each(&IO.puts/1)
   end
 
-  defp handle_async_result(_, _, data) do
-    IO.puts(data)
+  defp handle_async_result(_, osPID, data) do
+    Agent.update(__MODULE__, fn state ->
+      Map.update!(state, osPID, fn value ->
+        %{
+          ready: false,
+          results: Map.get(value, :results) ++ [data]
+        }
+      end)
+    end)
+    # IO.inspect(Agent.get(__MODULE__, fn state -> state end))
+  end
+
+  def start_monitoring(pid) do
+    Process.monitor(pid)
+    osPID = :exec.ospid(pid)
+    receive do
+      _ ->
+        Agent.update(__MODULE__, fn state ->
+          Map.update!(state, osPID, fn value ->
+            %{
+              ready: true,
+              results: Map.get(value, :results)
+            }
+          end)
+        end)
+       # IO.inspect(Agent.get(__MODULE__, fn state -> state end))
+    end
   end
 
 end
