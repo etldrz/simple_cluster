@@ -1,0 +1,1 @@
+perl -pe "system 'sleep .5'" README.md

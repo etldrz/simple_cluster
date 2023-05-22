@@ -5,7 +5,7 @@ sudo apt update
 sudo apt-get -y install curl git
 sudo apt-get -y install iperf3
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.1
-. "$HOME/.asdf/asdf.sh"
+. "${HOME}/.asdf/asdf.sh"
 echo '. "$HOME/.asdf/asdf.sh"' >> ~/.bashrc
 sudo apt-get -y install \
   build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev \
