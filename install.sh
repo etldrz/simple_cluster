@@ -20,3 +20,4 @@ asdf global erlang 25.3.2
 asdf global elixir 1.14.4-otp-25
 mix local.hex --force
 mix deps.get
+bash
