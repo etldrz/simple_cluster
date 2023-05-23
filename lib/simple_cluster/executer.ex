@@ -84,7 +84,7 @@ defmodule SimpleCluster.Executer do
     end
     )
     # Delete the result if the result is ready.
-    if result == nil do
+    if result != nil do
       delete_result(osPID)
     end
     result
