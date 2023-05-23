@@ -11,5 +11,17 @@ SimpleCluster.Executer.get_raw_result(osPID1)
 ```
 
 ```elixir
-osPID2 = SimpleCluster.Executer.run_command()
+osPID2 = SimpleCluster.Executer.run_command("sh delay.sh", true)
+```
+
+```elixir
+SimpleCluster.Executer.get_raw_result(osPID2)
+```
+
+```elixir
+SimpleCluster.Executer.get_full_result(osPID2)
+```
+
+```elixir
+SimpleCluster.Executer.get_partial_result(osPID2)
 ```

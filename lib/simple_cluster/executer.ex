@@ -72,15 +72,22 @@ defmodule SimpleCluster.Executer do
     end)
   end
 
-  # This function will return
+  # This function will return full result of the async task.
+  # If the task is not finished, it will return nil instead of the partial result.
   def get_full_result(osPID) do
-    Agent.get(__MODULE__, fn state ->
+    result =  Agent.get(__MODULE__, fn state ->
       if Map.get(state, osPID) |> Map.get(:ready) do
         Map.get(state, osPID) |> Map.get(:results)
       else
         nil
       end
-    end)
+    end
+    )
+    # Delete the result if the result is ready.
+    if result == nil do
+      delete_result(osPID)
+    end
+    result
   end
 
   # This helper function parse the output so that each element is on their own line.
@@ -98,6 +105,13 @@ defmodule SimpleCluster.Executer do
       end)
     end)
     # IO.inspect(Agent.get(__MODULE__, fn state -> state end))
+  end
+
+  # This method deletes the result in the current Agent.
+  defp delete_result(osPID) do
+    Agent.update(__MODULE__, fn state ->
+      Map.delete(state, osPID)
+    end)
   end
 
   def start_monitoring(pid) do
