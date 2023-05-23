@@ -68,7 +68,12 @@ defmodule SimpleCluster.Executer do
   # This function returns only the content of the result even if the result is not ready yet.
   def get_partial_result(osPID) do
     Agent.get(__MODULE__, fn state ->
-      Map.get(state, osPID) |> Map.get(:results)
+      cached = Map.get(state, osPID)
+      if cached != nil do
+        Map.get(cached, :results)
+      else
+        nil
+      end
     end)
   end
 
@@ -76,8 +81,9 @@ defmodule SimpleCluster.Executer do
   # If the task is not finished, it will return nil instead of the partial result.
   def get_full_result(osPID) do
     result =  Agent.get(__MODULE__, fn state ->
-      if Map.get(state, osPID) |> Map.get(:ready) do
-        Map.get(state, osPID) |> Map.get(:results)
+      cached = Map.get(state, osPID)
+      if cached != nil && Map.get(cached, :ready) do
+        cached  |> Map.get(:results)
       else
         nil
       end
