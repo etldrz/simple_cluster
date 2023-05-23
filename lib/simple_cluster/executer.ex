@@ -72,7 +72,7 @@ defmodule SimpleCluster.Executer do
       if cached != nil do
         Map.get(cached, :results)
       else
-        nil
+        []
       end
     end)
   end
@@ -83,9 +83,9 @@ defmodule SimpleCluster.Executer do
     result =  Agent.get(__MODULE__, fn state ->
       cached = Map.get(state, osPID)
       if cached != nil && Map.get(cached, :ready) do
-        cached  |> Map.get(:results)
+        cached |> Map.get(:results)
       else
-        nil
+        []
       end
     end
     )
