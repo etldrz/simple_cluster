@@ -22,8 +22,9 @@ defmodule SimpleCluster.Executer do
       osPID
     else
       {:ok, [stdout: result]} = :exec.run_link(cmd, [:sync, :stdout])
+      result
       # Just return the result
-      Enum.each(result, &parse_output/1)
+      #Enum.each(result, &parse_output/1)
     end
   end
 
@@ -98,7 +99,7 @@ defmodule SimpleCluster.Executer do
 
   # This helper function parse the output so that each element is on their own line.
   defp parse_output(output) do
-    output |> String.split("\n") |> Enum.each(&IO.puts/1)
+    output |> String.split("\n") |> Enum.map(fn x -> x end)
   end
 
   defp handle_async_result(_, osPID, data) do
