@@ -12,7 +12,7 @@ defmodule SimpleCluster.Executer do
   # DOES NOT GIVE FINE CONTROL OVER THE COMMAND
   def run_command(cmd, async) do
     if async == true do
-      {:ok, pid, osPID} = :exec.run_link(cmd, [{:stdout, &handle_async_result/3}, :stdin])
+      {:ok, pid, osPID} = :exec.run(cmd, [{:stdout, &handle_async_result/3}, :stdin])
       # Put the new task and results in the map as a place holder
       Agent.update(__MODULE__, fn state ->
         Map.put_new(state, osPID, %{ready: false, results: []})
