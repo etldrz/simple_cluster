@@ -18,6 +18,7 @@ asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 asdf install elixir 1.14.4-otp-25
 asdf global erlang 25.3.2
 asdf global elixir 1.14.4-otp-25
+cd ~/simple_cluster
 mix local.hex --force
 mix local.rebar --force
 mix deps.get
