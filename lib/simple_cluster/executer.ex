@@ -86,7 +86,7 @@ defmodule SimpleCluster.Executer do
       if cached != nil && Map.get(cached, :ready) do
         cached |> Map.get(:results)
       else
-        cached
+        nil
       end
     end
     )
