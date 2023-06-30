@@ -25,4 +25,5 @@ cd /local/repository
 mix local.hex --force
 mix local.rebar --force
 mix deps.get
+MIX_ENV=prod mix release
 bash
