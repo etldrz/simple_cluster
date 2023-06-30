@@ -1,7 +1,10 @@
+#!/bin/bash
 cd /local
 sudo chown axetang:PowderSandbox .
 sudo apt-get update
 sudo apt update
+sudo apt upgrade
+sudo apt dist-upgrade
 sudo apt-get -y install curl git
 sudo apt-get -y install iperf3
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.1
@@ -18,7 +21,7 @@ asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 asdf install elixir 1.14.4-otp-25
 asdf global erlang 25.3.2
 asdf global elixir 1.14.4-otp-25
-cd ~/simple_cluster
+cd ~/local/repository/simple_cluster
 mix local.hex --force
 mix local.rebar --force
 mix deps.get

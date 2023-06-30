@@ -23,8 +23,6 @@ defmodule SimpleCluster.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:libcluster, "~> 3.3"},
-      {:rambo, "~> 0.3"},
       {:erlexec, "~> 2.0"}
     ]
   end
