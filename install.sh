@@ -3,8 +3,6 @@ cd /local
 sudo chown axetang:PowderSandbox .
 sudo apt-get update
 sudo apt update
-sudo apt -y upgrade
-sudo apt -y dist-upgrade
 sudo apt-get -y install curl git
 sudo apt-get -y install iperf3
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.1
