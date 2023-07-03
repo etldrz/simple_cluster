@@ -9,6 +9,7 @@ Restart=on-failure
 Environment=MIX_ENV=prod
 Environment=LANG=en_US.UTF-8
 Environment=PORT=4396
+WorkingDirectory=/local/repository
 ExecStart=/local/repository/_build/prod/rel/simple_cluster/bin/simple_cluster start
 ExecStop=/local/repository/_build/prod/rel/simple_cluster/bin/simple_cluster stop
 
