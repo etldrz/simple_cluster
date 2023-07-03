@@ -26,4 +26,8 @@ mix local.hex --force
 mix local.rebar --force
 mix deps.get
 MIX_ENV=prod mix release
+bash ./generate.sh
+sudo cp executer.service /lib/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl start executer
 bash
