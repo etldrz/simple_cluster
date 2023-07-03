@@ -3,13 +3,11 @@ Description = Run Executer as a service.
 
 [Service]
 Type = simple
-User = axetang
-Group = PowderSandbox
 Restart=on-failure
 Environment=MIX_ENV=prod
 Environment=LANG=en_US.UTF-8
 WorkingDirectory=/local/repository
-ExecStart=/local/repository/_build/prod/rel/simple_cluster/bin/simple_cluster daemon
+ExecStart=/local/repository/_build/prod/rel/simple_cluster/bin/simple_cluster start
 ExecStop=/local/repository/_build/prod/rel/simple_cluster/bin/simple_cluster stop
 
 [Install]
