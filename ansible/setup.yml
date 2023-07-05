@@ -1,0 +1,4 @@
+- name: Run Executer as Service
+  hosts: setup
+  roles:
+    - setup
