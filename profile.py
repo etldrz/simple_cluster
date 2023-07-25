@@ -15,7 +15,7 @@ from geni.rspec.emulab.ansible import (Role, RoleBinding, Override, Playbook)
 
 HEAD_CMD = "sudo -u `geni-get user_urn | cut -f4 -d+` -Hi /bin/sh -c '/local/repository/emulab-ansible-bootstrap/head.sh >/local/logs/setup.log 2>&1'"
 CLIENT_CMD = "sudo -u `geni-get user_urn | cut -f4 -d+` -Hi /bin/sh -c '/local/repository/emulab-ansible-bootstrap/client.sh >/local/logs/setup.log 2>&1'"
-NODETYPE = "d710"
+NODETYPE = "d430"
 NODEIMAGE = "urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD"
 
 
