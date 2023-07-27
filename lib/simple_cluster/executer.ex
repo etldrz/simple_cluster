@@ -21,8 +21,12 @@ defmodule SimpleCluster.Executer do
       # So return the osPID so that the caller could use it for future use.
       osPID
     else
-      {:ok, [stdout: result]} = :exec.run_link(cmd, [:sync, :stdout])
-      result
+      case :exec.run_link(cmd, [:sync, :stdout]) do
+        {:ok, [stdout: result]} ->
+          result
+        {:ok, []} ->
+          :ok
+      end
       # Just return the result
       #Enum.each(result, &parse_output/1)
     end
