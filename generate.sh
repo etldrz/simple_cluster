@@ -2,13 +2,13 @@
 
 exec 3<> executer.service
     echo "[Unit]" >&3
-    echo "Description = Run Executer as a service." >&3
+    echo "Description=Run Executer as a service." >&3
     echo $'' >&3
     echo "[Service]" >&3
-    echo "Type = simple" >&3
-    echo "User = ${USER}" >&3
-    echo "Group = ${GROUP}" >&3
-    echo "Restart=on-failure" >&3
+    echo "Type=simple" >&3
+    echo "User=${USER}" >&3
+    echo "Group=${GROUP}" >&3
+    echo "Restart=always" >&3
     echo "Environment=MIX_ENV=prod" >&3
     echo "Environment=LANG=en_US.UTF-8" >&3
     echo "WorkingDirectory=/local/repository" >&3
