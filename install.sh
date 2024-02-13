@@ -16,6 +16,6 @@ MIX_ENV=prod mix release
 sudo cp executer.service /lib/systemd/system
 sudo cp executer.service /etc/systemd/system
 sudo systemctl daemon-reload
-sudo systemctl start executer
 sudo systemctl enable executer
+sudo systemctl start executer
 bash
