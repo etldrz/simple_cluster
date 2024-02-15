@@ -2,7 +2,7 @@ defmodule SimpleCluster.Executer do
   use Agent
 
   def start_link(_arg) do
-    Agent.start_link(fn -> %{} end, name: __MODULE__)
+    Agent.start_link(fn -> %{cd: "/local/repository/"} end, name: __MODULE__)
   end
 
   # Run the given command either synchronous or asynchronous.
@@ -11,8 +11,9 @@ defmodule SimpleCluster.Executer do
   # However, the user will not be able send new data to synchronous processes (since it will be blocking)
   # DOES NOT GIVE FINE CONTROL OVER THE COMMAND
   def run_command(cmd, async) do
+    working_directory = Agent.get(__MODULE__, fn state -> Map.get(state, :cd) end)
     if async == true do
-      {:ok, pid, osPID} = :exec.run(cmd, [{:stdout, &handle_async_result/3}, :stdin])
+      {:ok, pid, osPID} = :exec.run(cmd, [{:cd, working_directory}, {:stdout, &handle_async_result/3}, :stdin])
       # Put the new task and results in the map as a place holder
       Agent.update(__MODULE__, fn state ->
         Map.put_new(state, osPID, %{ready: false, results: []})
@@ -21,7 +22,7 @@ defmodule SimpleCluster.Executer do
       # So return the osPID so that the caller could use it for future use.
       osPID
     else
-      case :exec.run_link(cmd, [:sync, :stdout]) do
+      case :exec.run_link(cmd, [{:cd, working_directory}, :sync, :stdout]) do
         {:ok, [stdout: result]} ->
           result
         {:ok, []} ->
@@ -140,6 +141,12 @@ defmodule SimpleCluster.Executer do
         end)
        # IO.inspect(Agent.get(__MODULE__, fn state -> state end))
     end
+  end
+
+  def change_working_directory(new_directory) do
+    Agent.update(__MODULE__, fn state ->
+      Map.put(state, :cd, new_directory)
+    end)
   end
 
 end
