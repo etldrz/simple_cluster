@@ -2,7 +2,7 @@ defmodule SimpleCluster.Executer do
   use Agent
 
   def start_link(_arg) do
-    Agent.start_link(fn -> %{cd: "/local/repository/"} end, name: __MODULE__)
+    Agent.start_link(fn -> %{env: %{"PWD" => "/local/repository/"}} end, name: __MODULE__)
   end
 
   # Run the given command either synchronous or asynchronous.
@@ -11,9 +11,10 @@ defmodule SimpleCluster.Executer do
   # However, the user will not be able send new data to synchronous processes (since it will be blocking)
   # DOES NOT GIVE FINE CONTROL OVER THE COMMAND
   def run_command(cmd, async) do
-    working_directory = Agent.get(__MODULE__, fn state -> Map.get(state, :cd) end)
+    # need to convert env to list first.
+    env = Agent.get(__MODULE__, fn state -> Map.get(state, :env) end) |> Map.to_list()
     if async == true do
-      {:ok, pid, osPID} = :exec.run(cmd, [{:cd, working_directory}, {:stdout, &handle_async_result/3}, :stdin])
+      {:ok, pid, osPID} = :exec.run(cmd, [{:env, env}, {:stdout, &handle_async_result/3}, :stdin])
       # Put the new task and results in the map as a place holder
       Agent.update(__MODULE__, fn state ->
         Map.put_new(state, osPID, %{ready: false, results: []})
@@ -22,11 +23,11 @@ defmodule SimpleCluster.Executer do
       # So return the osPID so that the caller could use it for future use.
       osPID
     else
-      case :exec.run_link(cmd, [{:cd, working_directory}, :sync, :stdout]) do
+      case :exec.run_link(cmd, [{:env, env}, :sync, :stdout]) do
         {:ok, [stdout: result]} ->
           result
         {:ok, []} ->
-          :ok
+          []
       end
       # Just return the result
       #Enum.each(result, &parse_output/1)
@@ -145,7 +146,17 @@ defmodule SimpleCluster.Executer do
 
   def change_working_directory(new_directory) do
     Agent.update(__MODULE__, fn state ->
-      Map.put(state, :cd, new_directory)
+      Map.update!(state, :env, fn env_map ->
+        Map.update!(env_map, "PWD", fn _original ->
+          new_directory
+        end)
+      end)
+    end)
+  end
+
+  def extend_env(map_of_vars) do
+    Agent.update(__MODULE__, fn state ->
+      Map.put(state, :env, map_of_vars)
     end)
   end
 
