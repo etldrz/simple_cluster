@@ -2,7 +2,7 @@ defmodule SimpleCluster.Executer do
   use Agent
 
   def start_link(_arg) do
-    Agent.start_link(fn -> %{env: %{"PWD" => "/local/repository/"}} end, name: __MODULE__)
+    Agent.start_link(fn -> %{env: %{}, cd: "/local/repository"} end, name: __MODULE__)
   end
 
   # Run the given command either synchronous or asynchronous.
@@ -146,11 +146,7 @@ defmodule SimpleCluster.Executer do
 
   def change_working_directory(new_directory) do
     Agent.update(__MODULE__, fn state ->
-      Map.update!(state, :env, fn env_map ->
-        Map.update!(env_map, "PWD", fn _original ->
-          new_directory
-        end)
-      end)
+      Map.update!(state, :cd, fn _old_dir -> new_directory end)
     end)
   end
 
