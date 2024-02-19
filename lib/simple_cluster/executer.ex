@@ -154,9 +154,10 @@ defmodule SimpleCluster.Executer do
     end)
   end
 
+  @spec extend_env(any()) :: :ok
   def extend_env(map_of_vars) do
     Agent.update(__MODULE__, fn state ->
-      Map.put(state, :env, map_of_vars)
+      Map.update!(state, :env, fn old_env -> Map.merge(old_env, map_of_vars) end)
     end)
   end
 
