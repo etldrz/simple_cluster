@@ -13,8 +13,9 @@ defmodule SimpleCluster.Executer do
   def run_command(cmd, async) do
     # need to convert env to list first.
     env = Agent.get(__MODULE__, fn state -> Map.get(state, :env) end) |> Map.to_list()
+    working_directory = Agent.get(__MODULE__, fn state -> Map.get(state, :cd) end)
     if async == true do
-      {:ok, pid, osPID} = :exec.run(cmd, [{:env, env}, {:stdout, &handle_async_result/3}, :stdin])
+      {:ok, pid, osPID} = :exec.run(cmd, [{:env, env}, {:cd, working_directory}, {:stdout, &handle_async_result/3}, :stdin])
       # Put the new task and results in the map as a place holder
       Agent.update(__MODULE__, fn state ->
         Map.put_new(state, osPID, %{ready: false, results: []})
@@ -23,7 +24,7 @@ defmodule SimpleCluster.Executer do
       # So return the osPID so that the caller could use it for future use.
       osPID
     else
-      case :exec.run_link(cmd, [{:env, env}, :sync, :stdout]) do
+      case :exec.run_link(cmd, [{:env, env}, {:cd, working_directory}, :sync, :stdout]) do
         {:ok, [stdout: result]} ->
           result
         {:ok, []} ->
