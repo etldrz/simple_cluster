@@ -52,20 +52,20 @@ iface2 = node2.addInterface()
 iface2.addAddress(pg.IPv4Address("192.168.1.2", "255.255.255.0"))
 
 # Add another raw PC to the request and give it an interface.
-node3 = request.RawPC("node3")
-node3.hardware_type = NODETYPE
-node3.disk_image = NODEIMAGE
-node3.addService(pg.Execute(shell="sh",command=CLIENT_CMD))
-node3.bindRole(RoleBinding("setup"))
-iface3 = node3.addInterface()
+#node3 = request.RawPC("node3")
+#node3.hardware_type = NODETYPE
+#node3.disk_image = NODEIMAGE
+#node3.addService(pg.Execute(shell="sh",command=CLIENT_CMD))
+#node3.bindRole(RoleBinding("setup"))
+#iface3 = node3.addInterface()
 
 # Specify the IPv4 address
-iface3.addAddress(pg.IPv4Address("192.168.1.3", "255.255.255.0"))
+#iface3.addAddress(pg.IPv4Address("192.168.1.3", "255.255.255.0"))
 
 link = request.LAN("link")
 link.addInterface(iface1)
 link.addInterface(iface2)
-link.addInterface(iface3)
+#link.addInterface(iface3)
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
