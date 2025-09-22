@@ -1,4 +1,4 @@
-"""This profile allocates 3 nodes and connects them together with 2 links. Have been updated to use Ubuntu 22
+"""This profile allocates 2 nodes and connects them together with 1 link. Have been updated to use Ubuntu 22
 
 Instructions:
 Click on any node in the topology and choose the `shell` menu item. When your shell window appears, use `ping` to test the link."""
