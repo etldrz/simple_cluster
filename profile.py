@@ -18,7 +18,6 @@ CLIENT_CMD = "sudo -u `geni-get user_urn | cut -f4 -d+` -Hi /bin/sh -c '/local/r
 NODETYPE = "d710"
 NODEIMAGE = "urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU22-64-STD"
 
-
 # Create a portal context.
 pc = portal.Context()
 
